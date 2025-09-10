@@ -86,12 +86,20 @@ def render(navigate_to):
     st.divider()
     st.header("🚀 Ready to Start?")
 
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
+    col1, col2 = st.columns(2)
+    with col1:
         if st.button(
-            "🎯 Start Your Causal Journey", type="primary", use_container_width=True
+            "🎯 Lesson 1: What is Causality?", type="primary", use_container_width=True
         ):
             navigate_to("what_is_causality")
 
+    with col2:
+        if st.button(
+            "🏃‍♂️ Lesson 2: Selection Bias", type="primary", use_container_width=True
+        ):
+            navigate_to("selection_bias")
+
     st.divider()
-    st.caption("*Estimated completion: 20 minutes | No math background required*")
+    st.caption(
+        "*Estimated completion: 15-20 minutes each | No math background required*"
+    )

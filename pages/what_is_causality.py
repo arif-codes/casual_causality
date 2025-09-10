@@ -122,10 +122,9 @@ def render(navigate_to):
     if st.button("← Back to Home"):
         navigate_to("home")
 
-    # Initialize session state for story progression
+        # Initialize session state
     if "story_step" not in st.session_state:
         st.session_state.story_step = 1
-    if "active_theory" not in st.session_state:
         st.session_state.active_theory = None
 
     # Story Step 1: Introduction
@@ -174,15 +173,19 @@ def render(navigate_to):
     if st.session_state.story_step >= 4:
         st.header("🧪 Test Your Theories")
         st.markdown(
-            "**What do you think is causing the morning rifles to be inaccurate?**"
+            "Move the sliders to see how changing a confounder (something that may effect the groupings) changes the marksman's accuracy"
         )
+
+        # Auto-activate first theory when reaching this section for the first time
+        if st.session_state.active_theory is None:
+            st.session_state.active_theory = "warmup"
 
         # Theory Controllers Row
         col1, col2, col3, col4 = st.columns(4)
 
         # Theory 1: Not Warmed Up
         with col1:
-            if st.session_state.story_step >= 5:
+            if st.session_state.story_step >= 4:
                 if st.button(
                     "🤸 Not Warmed Up", use_container_width=True, key="theory1"
                 ):
@@ -346,7 +349,7 @@ def render(navigate_to):
                 )
 
         # Target Visualization (always show when theories are available)
-        if st.session_state.story_step >= 5:
+        if st.session_state.story_step >= 4:
             st.subheader("🎯 Target Results")
 
             # Generate shot data based on current theory and slider value
@@ -357,19 +360,15 @@ def render(navigate_to):
                 "Afternoon", hangover_severity * 0.3, current_theory, theory_value
             )
 
-            col1, col2 = st.columns([2, 1])
+            col1, col2 = st.columns([3, 2])
             with col1:
                 fig = create_target_plot(morning_shots, afternoon_shots)
                 st.plotly_chart(fig, use_container_width=True)
             with col2:
                 morning_score = calculate_accuracy_score(morning_shots)
                 afternoon_score = calculate_accuracy_score(afternoon_shots)
-                st.metric(
-                    "🌅 Morning Average", f"{morning_score:.1f} inches from center"
-                )
-                st.metric(
-                    "🌅 Afternoon Average", f"{afternoon_score:.1f} inches from center"
-                )
+                st.metric("🌅 Morning Average", f'{morning_score:.1f}" from center')
+                st.metric("🌅 Afternoon Average", f'{afternoon_score:.1f}" from center')
 
                 if (
                     st.session_state.active_theory == "hangover"
@@ -401,7 +400,7 @@ def render(navigate_to):
 
     # Determine what the button should say and do
     if st.session_state.story_step == 9:
-        # Final step - show restart option
+        # Final step - show restart option and next lesson
         col1, col2 = st.columns(2)
         with col1:
             if st.button("🔄 Start Over", use_container_width=True, key="restart"):
@@ -409,7 +408,13 @@ def render(navigate_to):
                 st.session_state.active_theory = None
                 st.rerun()
         with col2:
-            st.info("🚧 More lessons coming soon!")
+            if st.button(
+                "🏃‍♂️ Next: Lesson 2",
+                use_container_width=True,
+                type="primary",
+                key="next_lesson",
+            ):
+                navigate_to("selection_bias")
     elif st.session_state.story_step == 8:
         # Only allow progression if they've solved the mystery (pints = 0)
         if st.session_state.active_theory == "hangover" and pints_last_night == 0:
