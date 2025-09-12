@@ -137,6 +137,7 @@ def render(navigate_to):
     **The Plan**: Run a 1-month experiment with a control group (your colleagues who won't run) and a treatment group (volunteers who will start running).
 
     Treatment in causality is the thing we change to see its effect on an outcome. Your treatment group are the ones who are effected by this treatment, control are not.
+    """
     )
 
     # Lesson Step 2: The Challenge
