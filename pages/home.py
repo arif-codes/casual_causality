@@ -41,7 +41,7 @@ def render(navigate_to):
         - ⚡ Does coffee actually *cause* productivity?
         - 💊 Does the drug actually *cure* patients?
         
-        **This is about causation - and it changes everything.**
+        **Causation is determing if one thing causes change in another thing.**
         """
         )
 
@@ -51,8 +51,7 @@ def render(navigate_to):
     learning_goals = [
         "🕵️ **Become a causality detective** - spot the difference between correlation and causation",
         "⚖️ **Understand when to trust causal claims** - and when to be skeptical",
-        "🎮 **Play with real scenarios** - see how hidden factors fool us",
-        "🎲 **Discover why randomisation is magic** - the gold standard of causal inference",
+        "🎮 **Learn with simple mini games** - I've added some maths, but minimal",
     ]
 
     for goal in learning_goals:
@@ -72,13 +71,13 @@ def render(navigate_to):
     with col2:
         st.markdown(
             """
-        **Hi! My name is Arif** and I'm a Data Scientist at Sky. I'm interested in Causality and Product Data Science, which is what led me to build this web app.
+        **Hi! My name is Arif** and I'm a Data Scientist at Sky. I'm interested in Causality and Product Data Science but most resources online are very maths heavy, which is what led me to build this web app.
         
         **Connect with me:**
         - 💼 [LinkedIn](https://uk.linkedin.com/in/arif-ahmed-1205bb191)
         - 📧 Contact me through LinkedIn for questions or feedback!
         
-        *I built this app in a few hours for curious minds who want to understand the world better.*
+        *This is a WIP project so please be prepared for things to change as I improve it :)*
         """
         )
 

@@ -154,6 +154,14 @@ def render(navigate_to):
             "So it appears that rifles tested in the **afternoon** are more accurate than rifles tested in the **morning**?!"
         )
 
+        st.markdown(
+            "If we just look at the correlation we would say: Time of testing effects accuracy of rifle."
+        )
+
+        st.markdown(
+            "Logically, this doesn't sit right and this opens the door to a causal investigation."
+        )
+
     # Story Step 3: The Questions
     if st.session_state.story_step >= 3:
         st.subheader("The Questions:")
@@ -297,10 +305,10 @@ def render(navigate_to):
         elif st.session_state.active_theory == "fatigue":
             current_theory = "fatigue"
             st.subheader("😴 Theory: Getting Tired")
-            st.markdown("*Maybe he gets tired as the day goes on?*")
+            st.markdown("*Maybe he has a coffee or tea before the afternoon shift?*")
 
             coffee_cups = st.slider(
-                "Cups of Coffee Before Shooting",
+                "Cups of Coffee Before Shooting in the Morning",
                 min_value=0,
                 max_value=5,
                 value=2,
@@ -311,10 +319,12 @@ def render(navigate_to):
 
             theory_value = coffee_cups
 
-            st.error(
-                "**Problem:** If fatigue was the issue, morning should be BETTER than afternoon!"
-            )
-            st.error("**Result:** This theory doesn't match the pattern! ❌")
+            if coffee_cups >= 3:
+                st.error("**Tried loads of coffee:** His groupings seem even worse!")
+            else:
+                st.error(
+                    "**Tried no coffee:** No noticable difference to several cups of coffee"
+                )
 
             hangover_severity = 0.8  # Still hungover regardless
 
@@ -378,21 +388,22 @@ def render(navigate_to):
 
     # Story Step 9: The Big Lesson
     if st.session_state.story_step >= 9:
-        st.header("🎯 The Big Lesson")
+        st.header("🎯 Well done!")
 
         st.success(
             """
-        **This is causality detective work!**
-        
-        - ❌ **Time of day** was correlated with accuracy, but didn't *cause* the problem
+        - ❌ **Time of day** was correlated with accuracy, but didn't cause the problem
         - ❌ **Warmup, food, fatigue** seemed plausible but weren't the real cause  
-        - ✅ **Alcohol hangover** was the hidden factor actually *causing* poor morning accuracy
+        - ✅ **Alcohol hangover** was the hidden factor (or, as we will refer to it from here on "confounder") actually *causing* poor morning accuracy
         
         **The real cause was hidden** - time of day was just correlation and the other "confounders" were red herrings!
         """
         )
 
         st.markdown("**🎓 Key Insight:** *Causation = X actually makes Y happen*")
+        st.markdown(
+            "As causal investigators our job is to isolate what confounders are at play and the effect of each of them."
+        )
         st.markdown("Note to self: Avoid drinking before important tasks! 🍺🚫")
 
     # Single Next button at the bottom
@@ -428,7 +439,7 @@ def render(navigate_to):
                 st.rerun()
         else:
             st.info(
-                "💡 **Hint:** Try the 'Hangover Effect' theory and adjust the slider to solve the mystery!"
+                "💡 **Hint:** Maybe it's something else entirely (a hidden confounder)...."
             )
     else:
         # Regular progression

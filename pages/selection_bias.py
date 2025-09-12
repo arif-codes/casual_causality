@@ -104,7 +104,7 @@ def get_location_message(location):
         },
         "hospital": {
             "signup": "15 people signed up from the Hospital!",
-            "result": "❌ **Experiment Failed!**\n\nMany volunteers got injured and couldn't complete the program!\n\n**Control group:** No change in weight\n**Treatment group:** +3 lbs average (due to injuries preventing exercise)",
+            "result": "❌ **Experiment Failed!**\n\nMany volunteers got injured and couldn't complete the program!\n\n**Control group:** No change in weight\n**Treatment group:** Minimal change in weight",
             "prompt": "This is getting worse! The running program is backfiring. Maybe a different location will work better?",
         },
     }
@@ -132,10 +132,11 @@ def render(navigate_to):
         """
     **The Argument**: You're an avid runner arguing with colleagues about whether running helps with weight loss.
     
-    **The Wager**: $100 says running will help people lose significantly more weight than not running.
+    **The Wager**: £100 says running will help people lose significantly more weight than not running.
     
     **The Plan**: Run a 1-month experiment with a control group (your colleagues who won't run) and a treatment group (volunteers who will start running).
-    """
+
+    Treatment in causality is the thing we change to see its effect on an outcome. Your treatment group are the ones who are effected by this treatment, control are not.
     )
 
     # Lesson Step 2: The Challenge
@@ -144,9 +145,9 @@ def render(navigate_to):
 
         st.markdown(
             """
-        **Control Group**: ✅ Your colleagues volunteered (they won't run)
+        **Control Group**: ✅ Sorted, your colleagues said they will continue to avoid running.
         
-        **Treatment Group**: ❓ You need to recruit volunteers who will run
+        **Treatment Group**: ❓ What do we do for this? We need to get poeple who don't run and convince them to run for the month.
         
         **Your Solution**: Place signs around the city asking people to sign up for your running experiment!
         """
@@ -276,7 +277,7 @@ def render(navigate_to):
 
         st.error(
             """
-        **You Lost $100 Because of Selection Bias!**
+        **You Lost £100 Because of Selection Bias!**
         
         The problem wasn't your hypothesis (running does help with weight loss).
         The problem was **WHERE** you recruited your treatment group!
@@ -322,7 +323,7 @@ def render(navigate_to):
         Where and how you recruit participants can dramatically bias your results, 
         even if your hypothesis is correct!
         
-        **Better approach**: Random sampling from the general population, not convenience sampling from biased locations.
+        **Better approach**: Random sampling from the general population, not convenience sampling from biased locations (look out for Lesson 4 👀).
         """
         )
 
