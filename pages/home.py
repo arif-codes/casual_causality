@@ -85,7 +85,7 @@ def render(navigate_to):
     st.divider()
     st.header("🚀 Ready to Start?")
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
         if st.button(
             "🎯 Lesson 1: What is Causality?", type="primary", use_container_width=True
@@ -103,6 +103,14 @@ def render(navigate_to):
             "🧩 Lesson 3: Confounders", type="primary", use_container_width=True
         ):
             navigate_to("confounders")
+
+    with col4:
+        if st.button(
+            "🎲 Lesson 4: Randomized Experiments",
+            type="primary",
+            use_container_width=True,
+        ):
+            navigate_to("randomized_experiments")
 
     st.divider()
     st.caption(

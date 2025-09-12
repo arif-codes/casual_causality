@@ -466,7 +466,8 @@ def render(navigate_to):
                 st.session_state.show_math = False
                 st.rerun()
         with col2:
-            st.info("🚧 More lessons coming soon!")
+            if st.button("🎲 Next: Lesson 4", use_container_width=True, type="primary"):
+                navigate_to("randomized_experiments")
         with col3:
             if st.button("♾️ Optional Maths", use_container_width=True):
                 st.session_state.show_math = True

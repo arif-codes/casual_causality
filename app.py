@@ -1,5 +1,11 @@
 import streamlit as st
-from pages import home, what_is_causality, selection_bias, confounders
+from pages import (
+    home,
+    what_is_causality,
+    selection_bias,
+    confounders,
+    randomized_experiments,
+)
 
 # Configure page
 st.set_page_config(
@@ -29,3 +35,5 @@ elif st.session_state.current_page == "selection_bias":
     selection_bias.render(navigate_to)
 elif st.session_state.current_page == "confounders":
     confounders.render(navigate_to)
+elif st.session_state.current_page == "randomized_experiments":
+    randomized_experiments.render(navigate_to)
