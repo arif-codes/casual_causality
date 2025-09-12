@@ -121,7 +121,9 @@ def render(navigate_to):
         st.session_state.lesson2_step = 1
         st.session_state.current_location = None
         st.session_state.tested_locations = set()
-        st.session_state.experiment_phase = "select"  # select, signup, experiment, results
+        st.session_state.experiment_phase = (
+            "select"  # select, signup, experiment, results
+        )
 
     # Lesson Step 1: Introduction
     st.title("🏃‍♂️ The Running Weight Loss Experiment")
@@ -164,67 +166,100 @@ def render(navigate_to):
 
         # Location selection buttons
         col1, col2, col3 = st.columns(3)
-        
+
         with col1:
-            if st.button("🍟 Place at McDonald's", use_container_width=True, key="mcdonalds_btn"):
+            if st.button(
+                "🍟 Place at McDonald's", use_container_width=True, key="mcdonalds_btn"
+            ):
                 st.session_state.current_location = "mcdonalds"
                 st.session_state.experiment_phase = "placed"
                 st.rerun()
-        
+
         with col2:
             if st.button("💪 Place at Gym", use_container_width=True, key="gym_btn"):
                 st.session_state.current_location = "gym"
                 st.session_state.experiment_phase = "placed"
                 st.rerun()
-        
+
         with col3:
-            if st.button("🏥 Place at Hospital", use_container_width=True, key="hospital_btn"):
+            if st.button(
+                "🏥 Place at Hospital", use_container_width=True, key="hospital_btn"
+            ):
                 st.session_state.current_location = "hospital"
                 st.session_state.experiment_phase = "placed"
                 st.rerun()
 
         # Show location-specific content based on phase
-        if st.session_state.current_location and st.session_state.experiment_phase == "placed":
+        if (
+            st.session_state.current_location
+            and st.session_state.experiment_phase == "placed"
+        ):
             location_data = get_location_message(st.session_state.current_location)
-            
-            st.info(f"📍 **Sign placed at {st.session_state.current_location.title()}**")
-            
-            if st.button("⏳ Wait for Sign-ups", type="primary", use_container_width=True, key="signup_btn"):
+
+            st.info(
+                f"📍 **Sign placed at {st.session_state.current_location.title()}**"
+            )
+
+            if st.button(
+                "⏳ Wait for Sign-ups",
+                type="primary",
+                use_container_width=True,
+                key="signup_btn",
+            ):
                 st.session_state.experiment_phase = "signup"
                 st.rerun()
-        
-        elif st.session_state.current_location and st.session_state.experiment_phase == "signup":
+
+        elif (
+            st.session_state.current_location
+            and st.session_state.experiment_phase == "signup"
+        ):
             location_data = get_location_message(st.session_state.current_location)
-            
-            st.info(f"📍 **Sign placed at {st.session_state.current_location.title()}**")
+
+            st.info(
+                f"📍 **Sign placed at {st.session_state.current_location.title()}**"
+            )
             st.success(location_data["signup"])
-            
-            if st.button("🧪 Run Experiment", use_container_width=True, key="experiment_btn"):
+
+            if st.button(
+                "🧪 Run Experiment", use_container_width=True, key="experiment_btn"
+            ):
                 st.session_state.experiment_phase = "results"
                 st.rerun()
-        
-        elif st.session_state.current_location and st.session_state.experiment_phase == "results":
+
+        elif (
+            st.session_state.current_location
+            and st.session_state.experiment_phase == "results"
+        ):
             location_data = get_location_message(st.session_state.current_location)
-            
-            st.info(f"📍 **Sign placed at {st.session_state.current_location.title()}**")
+
+            st.info(
+                f"📍 **Sign placed at {st.session_state.current_location.title()}**"
+            )
             st.success(location_data["signup"])
-            
+
             st.error("**Results after 1 month:**")
             st.error(location_data["result"])
             st.warning(location_data["prompt"])
-            
+
             # Add to tested locations
-            if st.session_state.current_location not in st.session_state.tested_locations:
+            if (
+                st.session_state.current_location
+                not in st.session_state.tested_locations
+            ):
                 st.session_state.tested_locations.add(st.session_state.current_location)
-            
+
             # Show appropriate next action
             if len(st.session_state.tested_locations) < 3:
-                if st.button("🔄 Try a Different Site", use_container_width=True, key="retry_btn"):
+                if st.button(
+                    "🔄 Try a Different Site", use_container_width=True, key="retry_btn"
+                ):
                     st.session_state.current_location = None
                     st.session_state.experiment_phase = "select"
                     st.rerun()
             else:
-                st.info("💡 You've tried all locations... something seems wrong with your approach!")
+                st.info(
+                    "💡 You've tried all locations... something seems wrong with your approach!"
+                )
 
     # Show "What's Going On?" when all locations tested
     if len(st.session_state.tested_locations) >= 3:
@@ -304,7 +339,8 @@ def render(navigate_to):
                 st.session_state.experiment_phase = "select"
                 st.rerun()
         with col2:
-            st.info("🚧 More lessons coming soon!")
+            if st.button("🧩 Next: Lesson 3", use_container_width=True, type="primary"):
+                navigate_to("confounders")
     elif st.session_state.lesson2_step == 3:
         # During interactive map phase - no next button until all experiments done
         # The "What's Going On?" button will appear when all 3 locations tested
