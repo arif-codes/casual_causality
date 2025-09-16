@@ -85,7 +85,7 @@ def render(navigate_to):
     st.divider()
     st.header("🚀 Ready to Start?")
 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
         if st.button(
             "🎯 Lesson 1: What is Causality?", type="primary", use_container_width=True
@@ -112,7 +112,15 @@ def render(navigate_to):
         ):
             navigate_to("randomized_experiments")
 
+    with col5:
+        if st.button(
+            "📈 Lesson 5: Difference-in-Differences",
+            type="primary",
+            use_container_width=True,
+        ):
+            navigate_to("difference_in_differences")
+
     st.divider()
     st.caption(
-        "*Estimated completion: 15-20 minutes each | No math background required*"
+        "*Estimated completion: 5-10 minutes each | No math background required*"
     )

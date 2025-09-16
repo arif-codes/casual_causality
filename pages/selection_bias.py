@@ -21,12 +21,12 @@ def create_city_map(selected_location=None):
 
     # Add locations
     locations = {
-        "mcdonalds": {
+        "fastfood": {
             "x": 2,
             "y": 8,
             "color": "red",
             "symbol": "square",
-            "name": "McDonald's",
+            "name": "Fast Food Restaurant",
         },
         "gym": {"x": 8, "y": 8, "color": "blue", "symbol": "diamond", "name": "Gym"},
         "hospital": {
@@ -92,9 +92,9 @@ def create_city_map(selected_location=None):
 def get_location_message(location):
     """Get message based on sign placement location"""
     messages = {
-        "mcdonalds": {
-            "signup": "25 people signed up from McDonald's!",
-            "result": "❌ **Experiment Failed!**\n\nYour 25 McDonald's volunteers actually GAINED weight during the running program!\n\n**Control group:** No change in weight\n**Treatment group:** +2 lbs average weight gain",
+        "fastfood": {
+            "signup": "25 people signed up from the Fast Food Restaurant!",
+            "result": "❌ **Experiment Failed!**\n\nYour 25 Fast Food Restaurant volunteers actually GAINED weight during the running program!\n\n**Control group:** No change in weight\n**Treatment group:** +2 lbs average weight gain",
             "prompt": "This doesn't make sense... running should help with weight loss! Maybe try a different location?",
         },
         "gym": {
@@ -171,9 +171,11 @@ def render(navigate_to):
 
         with col1:
             if st.button(
-                "🍟 Place at McDonald's", use_container_width=True, key="mcdonalds_btn"
+                "🍟 Place at Fast Food Restaurant",
+                use_container_width=True,
+                key="fastfood_btn",
             ):
-                st.session_state.current_location = "mcdonalds"
+                st.session_state.current_location = "fastfood"
                 st.session_state.experiment_phase = "placed"
                 st.rerun()
 
@@ -298,7 +300,7 @@ def render(navigate_to):
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            st.error("**🍟 McDonald's**")
+            st.error("**🍟 Fast Food Restaurant**")
             st.markdown(
                 "People who eat unhealthily. Even with running, their diet sabotaged the results!"
             )

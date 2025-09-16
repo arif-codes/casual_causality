@@ -5,6 +5,7 @@ from pages import (
     selection_bias,
     confounders,
     randomized_experiments,
+    difference_in_differences,
 )
 
 # Configure page
@@ -37,3 +38,5 @@ elif st.session_state.current_page == "confounders":
     confounders.render(navigate_to)
 elif st.session_state.current_page == "randomized_experiments":
     randomized_experiments.render(navigate_to)
+elif st.session_state.current_page == "difference_in_differences":
+    difference_in_differences.render(navigate_to)

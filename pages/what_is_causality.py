@@ -430,7 +430,7 @@ def render(navigate_to):
         # Only allow progression if they've solved the mystery (pints = 0)
         if st.session_state.active_theory == "hangover" and pints_last_night == 0:
             if st.button(
-                "Next → See the Big Lesson",
+                "Next →",
                 type="primary",
                 use_container_width=True,
                 key="final_next",
