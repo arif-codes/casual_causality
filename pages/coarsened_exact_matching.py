@@ -5,16 +5,14 @@ import random
 
 
 def generate_user_data():
-    """Generate synthetic user data for the matching exercise"""
-    random.seed(42)
-    np.random.seed(42)
+    """Hard-coded user data designed to show clear confounding effect"""
 
     all_users = []
 
-    # Generate many Premium users for initial display (show confounding)
+    # Premium users: Older, wealthier, lower churn (3 out of 10 churn = 30%)
     premium_configs_full = [
         {"age": 45, "income": 85000, "churned": False},  # Older, High
-        {"age": 52, "income": 95000, "churned": True},  # Older, High
+        {"age": 52, "income": 95000, "churned": False},  # Older, High
         {"age": 38, "income": 65000, "churned": False},  # Middle, Medium
         {"age": 41, "income": 75000, "churned": False},  # Middle, High
         {"age": 29, "income": 45000, "churned": True},  # Young, Medium
@@ -36,7 +34,7 @@ def generate_user_data():
         }
         all_users.append(user)
 
-    # Generate many Free users for initial display
+    # Free users: Younger, poorer, higher churn (12 out of 15 churn = 80%)
     free_configs_full = [
         {"age": 26, "income": 35000, "churned": True},  # Young, Low
         {"age": 31, "income": 42000, "churned": True},  # Young, Medium
@@ -48,11 +46,15 @@ def generate_user_data():
         {"age": 33, "income": 48000, "churned": True},  # Young, Medium
         {"age": 47, "income": 78000, "churned": False},  # Middle, High
         {"age": 29, "income": 41000, "churned": True},  # Young, Medium
-        {"age": 36, "income": 52000, "churned": False},  # Middle, Medium
-        {"age": 53, "income": 88000, "churned": False},  # Older, High
+        {"age": 36, "income": 52000, "churned": True},  # Middle, Medium
+        {"age": 53, "income": 88000, "churned": True},  # Older, High (changed to churn)
         {"age": 25, "income": 36000, "churned": True},  # Young, Low
         {"age": 42, "income": 64000, "churned": True},  # Middle, Medium
-        {"age": 49, "income": 76000, "churned": False},  # Middle, High
+        {
+            "age": 49,
+            "income": 76000,
+            "churned": True,
+        },  # Middle, High (changed to churn)
     ]
 
     for i, config in enumerate(free_configs_full):
@@ -70,8 +72,8 @@ def generate_user_data():
 
 
 def get_matching_subset():
-    """Get a smaller subset designed for 1:1 matching with guaranteed matches"""
-    # 5 Premium users that need matches - carefully designed buckets
+    """Hard-coded matching subset designed to show reduced treatment effect"""
+    # 5 Premium users - 2 churn, 3 stay = 40% churn rate
     premium_subset = [
         {
             "id": "P1",
@@ -99,7 +101,7 @@ def get_matching_subset():
             "type": "premium",
             "age": 41,
             "income": 35000,
-            "churned": True,
+            "churned": False,
         },  # Middle, Low
         {
             "id": "P5",
@@ -110,67 +112,67 @@ def get_matching_subset():
         },  # Young, Low
     ]
 
-    # 8 Free users - ensuring each premium has at least one clear match
+    # Free users designed for 50% churn rate when optimally matched
+    # This will give us: 50% - 40% = 10% treatment effect (vs 50% naive effect)
     free_subset = [
-        # Matches for P1 (Older, High)
+        # Perfect matches for each premium user
         {
             "id": "F1",
             "type": "free",
             "age": 53,
             "income": 88000,
             "churned": False,
-        },  # Older, High
+        },  # Match P1: Older, High - both stay
         {
             "id": "F2",
-            "type": "free",
-            "age": 51,
-            "income": 92000,
-            "churned": True,
-        },  # Older, High
-        # Matches for P2, P4 (Middle, Medium/Low)
-        {
-            "id": "F3",
             "type": "free",
             "age": 42,
             "income": 55000,
             "churned": False,
-        },  # Middle, Medium
+        },  # Match P2: Middle, Medium - both stay
+        {
+            "id": "F3",
+            "type": "free",
+            "age": 29,
+            "income": 42000,
+            "churned": True,
+        },  # Match P3: Young, Medium - both churn
         {
             "id": "F4",
             "type": "free",
             "age": 39,
             "income": 35000,
             "churned": True,
-        },  # Middle, Low
+        },  # Match P4: Middle, Low - premium stays, free churns
         {
             "id": "F5",
             "type": "free",
-            "age": 44,
-            "income": 32000,
+            "age": 27,
+            "income": 38000,
             "churned": True,
-        },  # Middle, Low
-        # Matches for P3, P5 (Young, Medium/Low)
+        },  # Match P5: Young, Low - both churn
+        # Additional options to make matching interesting
         {
             "id": "F6",
             "type": "free",
-            "age": 29,
-            "income": 42000,
+            "age": 51,
+            "income": 92000,
             "churned": True,
-        },  # Young, Medium
+        },  # Alternative for P1: Older, High - premium stays, free churns
         {
             "id": "F7",
             "type": "free",
-            "age": 27,
-            "income": 38000,
+            "age": 44,
+            "income": 32000,
             "churned": False,
-        },  # Young, Low
+        },  # Alternative for P4: Middle, Low - both stay
         {
             "id": "F8",
             "type": "free",
             "age": 26,
             "income": 35000,
-            "churned": True,
-        },  # Young, Low
+            "churned": False,
+        },  # Alternative for P5: Young, Low - premium churns, free stays
     ]
 
     all_subset = []
