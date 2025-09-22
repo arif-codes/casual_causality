@@ -407,7 +407,7 @@ def render(navigate_to):
             - Territory B change (Year 2 → Year 4): **+10 points**  
             - **Difference-in-Differences**: 15 - 10 = **+5 points**
             
-            The feature's true causal effect is +5 points, not the naive +10 estimate.
+            The feature's true causal effect is +5 points, not the naive +15 estimate.
             """
             )
 
@@ -504,7 +504,8 @@ def render(navigate_to):
                 st.rerun()
 
         with col2:
-            st.info("🚧 More lessons coming soon!")
+            if st.button("⚖️ Next Lesson", use_container_width=True):
+                navigate_to("coarsened_exact_matching")
 
         with col3:
             if st.button("♾️ Optional Maths", use_container_width=True):

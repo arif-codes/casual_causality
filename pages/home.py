@@ -85,7 +85,7 @@ def render(navigate_to):
     st.divider()
     st.header("🚀 Ready to Start?")
 
-    col1, col2, col3, col4, col5 = st.columns(5)
+    col1, col2, col3 = st.columns(3)
     with col1:
         if st.button(
             "🎯 Lesson 1: What is Causality?", type="primary", use_container_width=True
@@ -104,7 +104,8 @@ def render(navigate_to):
         ):
             navigate_to("confounders")
 
-    with col4:
+    col1, col2, col3 = st.columns(3)
+    with col1:
         if st.button(
             "🎲 Lesson 4: Randomized Experiments",
             type="primary",
@@ -112,13 +113,21 @@ def render(navigate_to):
         ):
             navigate_to("randomized_experiments")
 
-    with col5:
+    with col2:
         if st.button(
             "📈 Lesson 5: Difference-in-Differences",
             type="primary",
             use_container_width=True,
         ):
             navigate_to("difference_in_differences")
+
+    with col3:
+        if st.button(
+            "⚖️ Lesson 6: Coarsened Exact Matching",
+            type="primary",
+            use_container_width=True,
+        ):
+            navigate_to("coarsened_exact_matching")
 
     st.divider()
     st.caption(

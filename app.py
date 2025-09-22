@@ -6,6 +6,7 @@ from pages import (
     confounders,
     randomized_experiments,
     difference_in_differences,
+    coarsened_exact_matching,
 )
 
 # Configure page
@@ -40,3 +41,5 @@ elif st.session_state.current_page == "randomized_experiments":
     randomized_experiments.render(navigate_to)
 elif st.session_state.current_page == "difference_in_differences":
     difference_in_differences.render(navigate_to)
+elif st.session_state.current_page == "coarsened_exact_matching":
+    coarsened_exact_matching.render(navigate_to)
